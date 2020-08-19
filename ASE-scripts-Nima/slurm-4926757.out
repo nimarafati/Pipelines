@@ -1,0 +1,60 @@
+
+@CMD:samtools view -F 268 ../Sample_AB-d351-AA/Sample_AB-d351-gsnap-snpT-AA.Reordered.sort.bam | samtools view -bS -t /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa.fai - >../Sample_AB-d351-AA/Sample_AB-d351-gsnap-snpT-AA.Reordered.sortP.bam
+
+@CMD:samtools view -F 268 ../Sample_AB_7898-AA/Sample_AB_7898-gsnap-snpT-AA.Reordered.sort.bam | samtools view -bS -t /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa.fai - >../Sample_AB_7898-AA/Sample_AB_7898-gsnap-snpT-AA.Reordered.sortP.bam
+
+@CMD:samtools view -F 268 ../Sample_BA_d634-AA/Sample_BA_d634-gsnap-snpT-AA.Reordered.sort.bam | samtools view -bS -t /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa.fai - >../Sample_BA_d634-AA/Sample_BA_d634-gsnap-snpT-AA.Reordered.sortP.bam
+
+@CMD:samtools view -F 268 ../Sample_BA_7871-AA/Sample_BA_7871-gsnap-snpT-AA.Reordered.sort.bam | samtools view -bS -t /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa.fai - >../Sample_BA_7871-AA/Sample_BA_7871-gsnap-snpT-AA.Reordered.sortP.bam
+
+@CMD:samtools view -F 268 ../Sample_BA_d675-3-AA/Sample_BA_d675-3-gsnap-snpT-AA.Reordered.sort.bam | samtools view -bS -t /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa.fai - >../Sample_BA_d675-3-AA/Sample_BA_d675-3-gsnap-snpT-AA.Reordered.sortP.bam
+[sam_header_read2] 3242 sequences loaded.
+[sam_header_read2] 3242 sequences loaded.
+[sam_header_read2] 3242 sequences loaded.
+[sam_header_read2] 3242 sequences loaded.
+[sam_header_read2] 3242 sequences loaded.
+@CMD:samtools view -F 268 ../Sample_BA_d675-3-BB/Sample_BA_d675-3-gsnap-snpT-BB.Reordered.sort.bam | samtools view -bS -t /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa.fai - >../Sample_BA_d675-3-BB/Sample_BA_d675-3-gsnap-snpT-BB.Reordered.sortP.bam
+[sam_header_read2] 3242 sequences loaded.
+@CMD:samtools view -F 268 ../Sample_AB-d351-BB/Sample_AB-d351-gsnap-snpT-BB.Reordered.sort.bam | samtools view -bS -t /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa.fai - >../Sample_AB-d351-BB/Sample_AB-d351-gsnap-snpT-BB.Reordered.sortP.bam
+[sam_header_read2] 3242 sequences loaded.
+@CMD:samtools view -F 268 ../Sample_BA_7871-BB/Sample_BA_7871-gsnap-snpT-BB.Reordered.sort.bam | samtools view -bS -t /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa.fai - >../Sample_BA_7871-BB/Sample_BA_7871-gsnap-snpT-BB.Reordered.sortP.bam
+[sam_header_read2] 3242 sequences loaded.
+@CMD:samtools view -F 268 ../Sample_BA_d634-BB/Sample_BA_d634-gsnap-snpT-BB.Reordered.sort.bam | samtools view -bS -t /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa.fai - >../Sample_BA_d634-BB/Sample_BA_d634-gsnap-snpT-BB.Reordered.sortP.bam
+[sam_header_read2] 3242 sequences loaded.
+@CMD:samtools view -F 268 ../Sample_AB_7898-BB/Sample_AB_7898-gsnap-snpT-BB.Reordered.sort.bam | samtools view -bS -t /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa.fai - >../Sample_AB_7898-BB/Sample_AB_7898-gsnap-snpT-BB.Reordered.sortP.bam
+[sam_header_read2] 3242 sequences loaded.
+@CMD:samtools sort -@ 2 -m 6G -n ../Sample_BA_d675-3-AA/Sample_BA_d675-3-gsnap-snpT-AA.Reordered.sortP.bam ../Sample_BA_d675-3-AA/Sample_BA_d675-3-gsnap-snpT-AA.Reordered.sortPName
+@CMD:samtools sort -@ 2 -m 6G -n ../Sample_AB-d351-AA/Sample_AB-d351-gsnap-snpT-AA.Reordered.sortP.bam ../Sample_AB-d351-AA/Sample_AB-d351-gsnap-snpT-AA.Reordered.sortPName
+@CMD:samtools sort -@ 2 -m 6G -n ../Sample_BA_d634-AA/Sample_BA_d634-gsnap-snpT-AA.Reordered.sortP.bam ../Sample_BA_d634-AA/Sample_BA_d634-gsnap-snpT-AA.Reordered.sortPName
+@CMD:samtools sort -@ 2 -m 6G -n ../Sample_BA_7871-AA/Sample_BA_7871-gsnap-snpT-AA.Reordered.sortP.bam ../Sample_BA_7871-AA/Sample_BA_7871-gsnap-snpT-AA.Reordered.sortPName
+@CMD:samtools sort -@ 2 -m 6G -n ../Sample_AB_7898-AA/Sample_AB_7898-gsnap-snpT-AA.Reordered.sortP.bam ../Sample_AB_7898-AA/Sample_AB_7898-gsnap-snpT-AA.Reordered.sortPName
+[bam_sort_core] merging from 8 files...
+[bam_sort_core] merging from 8 files...
+[bam_sort_core] merging from 10 files...
+[bam_sort_core] merging from 10 files...
+[bam_sort_core] merging from 10 files...
+@CMD:samtools sort -@ 2 -m 6G -n ../Sample_BA_d675-3-BB/Sample_BA_d675-3-gsnap-snpT-BB.Reordered.sortP.bam ../Sample_BA_d675-3-BB/Sample_BA_d675-3-gsnap-snpT-BB.Reordered.sortPName
+@CMD:samtools sort -@ 2 -m 6G -n ../Sample_AB-d351-BB/Sample_AB-d351-gsnap-snpT-BB.Reordered.sortP.bam ../Sample_AB-d351-BB/Sample_AB-d351-gsnap-snpT-BB.Reordered.sortPName
+@CMD:samtools sort -@ 2 -m 6G -n ../Sample_BA_d634-BB/Sample_BA_d634-gsnap-snpT-BB.Reordered.sortP.bam ../Sample_BA_d634-BB/Sample_BA_d634-gsnap-snpT-BB.Reordered.sortPName
+@CMD:samtools sort -@ 2 -m 6G -n ../Sample_BA_7871-BB/Sample_BA_7871-gsnap-snpT-BB.Reordered.sortP.bam ../Sample_BA_7871-BB/Sample_BA_7871-gsnap-snpT-BB.Reordered.sortPName
+[bam_sort_core] merging from 8 files...
+@CMD:samtools sort -@ 2 -m 6G -n ../Sample_AB_7898-BB/Sample_AB_7898-gsnap-snpT-BB.Reordered.sortP.bam ../Sample_AB_7898-BB/Sample_AB_7898-gsnap-snpT-BB.Reordered.sortPName
+[bam_sort_core] merging from 8 files...
+[bam_sort_core] merging from 10 files...
+[bam_sort_core] merging from 10 files...
+[bam_sort_core] merging from 10 files...
+@CMD:samtools view ../Sample_BA_d675-3-AA/Sample_BA_d675-3-gsnap-snpT-AA.Reordered.sortPName.bam|
+@CMD:samtools view ../Sample_BA_d675-3-BB/Sample_BA_d675-3-gsnap-snpT-BB.Reordered.sortPName.bam|
+@CMD:samtools view ../Sample_AB-d351-AA/Sample_AB-d351-gsnap-snpT-AA.Reordered.sortPName.bam|
+@CMD:samtools view ../Sample_AB-d351-BB/Sample_AB-d351-gsnap-snpT-BB.Reordered.sortPName.bam|
+@CMD:samtools view ../Sample_BA_d634-AA/Sample_BA_d634-gsnap-snpT-AA.Reordered.sortPName.bam|
+@CMD:samtools view ../Sample_BA_d634-BB/Sample_BA_d634-gsnap-snpT-BB.Reordered.sortPName.bam|
+@CMD:samtools view ../Sample_BA_7871-AA/Sample_BA_7871-gsnap-snpT-AA.Reordered.sortPName.bam|
+@CMD:samtools view ../Sample_BA_7871-BB/Sample_BA_7871-gsnap-snpT-BB.Reordered.sortPName.bam|
+@CMD:samtools view ../Sample_AB_7898-AA/Sample_AB_7898-gsnap-snpT-AA.Reordered.sortPName.bam|
+@CMD:samtools view ../Sample_AB_7898-BB/Sample_AB_7898-gsnap-snpT-BB.Reordered.sortPName.bam|
+Single: 44904	Both: 42848280	Tie: 42807414
+Single: 50615	Both: 44259825	Tie: 44209899
+Single: 47104	Both: 45769649	Tie: 45726674
+Single: 69290	Both: 46502516	Tie: 46450948
+Single: 41911	Both: 49687142	Tie: 49638637

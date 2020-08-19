@@ -1,0 +1,18 @@
+
+@CMD:samtools view -F 268 ../Sample_AB-d012-AA/Sample_AB-d012-gsnap-snpT-AA.Reordered.sort.bam | samtools view -bS -t /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa.fai - >../Sample_AB-d012-AA/Sample_AB-d012-gsnap-snpT-AA.Reordered.sortP.bam
+[sam_header_read2] 3242 sequences loaded.
+@CMD:samtools view -F 268 ../Sample_AB-d012-BB/Sample_AB-d012-gsnap-snpT-BB.Reordered.sort.bam | samtools view -bS -t /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa.fai - >../Sample_AB-d012-BB/Sample_AB-d012-gsnap-snpT-BB.Reordered.sortP.bam
+[sam_header_read2] 3242 sequences loaded.
+@CMD:samtools sort -@ 2 -m 6G -n ../Sample_AB-d012-AA/Sample_AB-d012-gsnap-snpT-AA.Reordered.sortP.bam ../Sample_AB-d012-AA/Sample_AB-d012-gsnap-snpT-AA.Reordered.sortPName.bam
+[bam_sort_core] merging from 10 files...
+@CMD:samtools sort -@ 2 -m 6G -n ../Sample_AB-d012-BB/Sample_AB-d012-gsnap-snpT-BB.Reordered.sortP.bam ../Sample_AB-d012-BB/Sample_AB-d012-gsnap-snpT-BB.Reordered.sortPName.bam
+[bam_sort_core] merging from 10 files...
+@CMD:samtools view ../Sample_AB-d012-AA/Sample_AB-d012-gsnap-snpT-AA.Reordered.sortPName.bam|
+@CMD:samtools view ../Sample_AB-d012-BB/Sample_AB-d012-gsnap-snpT-BB.Reordered.sortPName.bam|
+open: No such file or directory
+[main_samview] fail to open "../Sample_AB-d012-AA/Sample_AB-d012-gsnap-snpT-AA.Reordered.sortPName.bam" for reading.
+open: No such file or directory
+[main_samview] fail to open "../Sample_AB-d012-BB/Sample_AB-d012-gsnap-snpT-BB.Reordered.sortPName.bam" for reading.
+ERROR!
+MD=
+qual=

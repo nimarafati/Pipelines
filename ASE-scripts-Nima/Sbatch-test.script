@@ -1,0 +1,14 @@
+#!/bin/bash -l
+#SBATCH -A b2012206
+#SBATCH -p node 
+#SBATCH -t 45:00:00
+#SBATCH -J K-Best 
+#SBATCH --mail-type=all
+#SBATCH --mail-user=nimarafati@gmail.com
+#./keep_best.pl Sample_AB-d012 /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa
+./keep_best.pl Sample_AB-d351 /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa &
+./keep_best.pl Sample_AB_7898 /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa &
+./keep_best.pl Sample_BA_7871 /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa &
+./keep_best.pl Sample_BA_d634 /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa &
+./keep_best.pl Sample_BA_d675-3 /proj/b2011054/private/Users/nima/tmpRabbit/oryCun2_assembly_files/oryCun2-reference-GSNAP/oryCun2-GSNAP.fa &
+wait
