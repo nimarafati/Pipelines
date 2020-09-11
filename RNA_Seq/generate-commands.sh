@@ -2,7 +2,7 @@
 ###################################################################
 #0. Resources                                                     #
 ###################################################################
-PROJ_ID='snic2020-15-15'
+PROJ_ID='snic2020-15-24'
 PROJECT_DIR='/crex/proj/snic2020-16-21/nobackup/private/SMS_5221_20_SounDrivenBiotechnology/'
 CODE=$PROJECT_DIR'code/'
 SAMPLES=$CODE'Samples_reads.txt'
@@ -13,10 +13,11 @@ TRIMMED_READS=$PROJECT_DIR'data/raw_data/Trimmed-reads/'
 STAR=$INTERMEDIATE_DIR'STAR_chromosome_level_Trimmed/'
 STAR_QC=$INTERMEDIATE_DIR'STAR_chromosome_level_Trimmed_QC/'
 GENOME_DIR=$PROJECT_DIR'data/meta_data/reference/STARIndex/'
-GFF_FILE=$PROJECT_DIR'data/meta_data/annotation/annotation.gff'
-GTF_FILE=$PROJECT_DIR'data/meta_data/annotation//annotation.gtf_new'
+GFF_FILE=$PROJECT_DIR'data/meta_data/annotation/annotation_updated_functional.gff'
+GTF_FILE=$PROJECT_DIR'data/meta_data/annotation/annotation_updated_functional.gtf'
 GENOME_SIZE=$PROJECT_DIR'data/meta_data/reference/genome.fai'
 FEATURECOUNTS_DIR=$PROJECT_DIR'intermediate/featureCounts/STAR_chromosome_level_Trimmed/'
+READ_LENGTH=151
 
 mkdir $TRIMMED_READS $STAR $STAR_QC $FEATURECOUNTS_DIR
 THREADS=20
@@ -58,7 +59,7 @@ do
 	echo "$SBATCH
 #SBATCH -J ${sample}_trim
 #SBATCH -p core -n $THREADS
-#SBATCH -t 6:00:00
+#SBATCH -t 24:00:00
 module load bioinfo-tools trimmomatic
 mkdir $TRIMMED_READS/${sample}
 
@@ -77,32 +78,57 @@ wait
 #Transfer only paired reads
 mv ${sample}_R1_paired.fq.gz $TRIMMED_READS/${sample} &
 mv ${sample}_R2_paired.fq.gz $TRIMMED_READS/${sample} &
-wait" >Sbatch_trim_${sample}.script
+wait
+cd $CODE
+sbatch Sbatch_fastqc_trimmed_${sample}.script
+sbatch Sbatch_align_${sample}.script" >Sbatch_trim_${sample}.script
 	echo "sbatch Sbatch_trim_${sample}.script" >>run_trim.log
+done<$SAMPLES
+
+###################################################################
+# FastQC after trimming                                           #
+###################################################################
+rm -rf run_fastqc_trimmed.txt
+while read -r sample R1 R2
+do
+        echo "$SBATCH
+#SBATCH -J ${sample}_FastQC
+#SBATCH -p core -n 4
+#SBATCH -t 2:00:00
+module load bioinfo-tools FastQC
+
+cd \$SNIC_TMP
+cp $TRIMMED_READS/$sample/*fq.gz  \$SNIC_TMP/ 
+mkdir  ${sample}_QC
+mkdir -p $INTERMEDIATE_DIR/FastQC_Trimmed/
+fastqc -t 4 -o ${sample}_QC -f fastq *fq.gz
+mv ${sample}_QC $INTERMEDIATE_DIR/FastQC_Trimmed/" >Sbatch_fastqc_trimmed_${sample}.script
+echo "sbatch Sbatch_fastqc_trimmed_${sample}.script" >>run_fastqc_trimmed.txt
 done<$SAMPLES
 
 ###################################################################
 # Align the reads to genome and Index bam files                   #
 ###################################################################
 rm -f run_align.sh
+THREADS=20
 while read -r sample R1 R2
 do
         echo "$SBATCH
 #SBATCH -p node
-#SBATCH -t 1:00:00
+#SBATCH -t 48:00:00
 #SBATCH -J ${sample}_align
 
 module load bioinfo-tools star samtools
 cd \$SNIC_TMP
-cp $TRIMMED_READS/*$sample*/$R1 \$SNIC_TMP &
-cp $TRIMMED_READS/*$sample*/$R2 \$SNIC_TMP &
+cp $TRIMMED_READS/*$sample*/${sample}_R1_paired.fq.gz \$SNIC_TMP &
+cp $TRIMMED_READS/*$sample*/${sample}_R2_paired.fq.gz \$SNIC_TMP &
 wait
 
 #Alignign the reads
 mkdir -p $STAR/$sample
 STAR --genomeDir $GENOME_DIR \
 --sjdbGTFfile $GTF_FILE \
---readFilesIn $R1 $R2 \
+--readFilesIn ${sample}_R1_paired.fq.gz ${sample}_R2_paired.fq.gz \
 --runThreadN  $THREADS \
 --twopassMode Basic \
 --outWigType bedGraph \
@@ -121,7 +147,8 @@ samtools index -@ $THREADS ${sample}.sort.bam
 ln -s  ${sample}.sort.bam.bai ${sample}.sort.bai
 mv ${sample}* $STAR/$sample/
 cd $CODE
-sbatch Sbatch_featurecounts_${sample}.script" >Sbatch_align_${sample}.script
+sbatch Sbatch_featurecounts_${sample}.script
+sbatch Sbatch_QoRTs_${sample}.script " >Sbatch_align_${sample}.script
 echo "sbatch Sbatch_align_${sample}.script" >>run_align.sh
 done<$SAMPLES
 ###################################################################
@@ -134,7 +161,7 @@ while read -r sample R1 R2
 do
         echo "$SBATCH
 #SBATCH -p node
-#SBATCH -t 1:30:00
+#SBATCH -t 4:00:00
 #SBATCH -J QoRTS_${sample}
 #module load bioinfo-tools QualiMap
 
@@ -154,15 +181,15 @@ while read -r sample R1 R2
 do
         echo "$SBATCH
 #SBATCH -p node
-#SBATCH -t 00:30:00
+#SBATCH -t 3:30:00
 #SBATCH -J ${sample}_FC
 cd \$SNIC_TMP
 cp $STAR/$sample/${sample}.sort.bam \$SNIC_TMP
 featureCounts_path=\"$FEATURECOUNTS_DIR/${sample}\"
 output=\"count-s-2\"
-annotation=\"$GTF_FILE\"
+annotation=\"$GFF_FILE\"
 mkdir -p \$featureCounts_path
-~/glob/Software/subread-2.0.0-source/bin/featureCounts -s 2 -t exon -g locus_tag -F GTF -C -T $THREADS -p -B --primary -Q 20 \
+~/glob/Software/subread-2.0.0-source/bin/featureCounts -s 2 -t exon -g locus_tag -F GFF -C -T $THREADS -p -B --primary -Q 20 \
 -o \$output \
 -a \$annotation \
 ${sample}.sort.bam 
