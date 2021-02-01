@@ -1,0 +1,39 @@
+library(edgeR)
+library(reshape2)
+library(ggplot2)
+##Loading the data
+path <- '~/SMS_5123_20_AM_fungi_annotation/'
+annotation <- read.table(paste0(path,'/intermediate/stringtie_GSNAP_assembly1/merged_XenofilteR_annotation_gene_id.txt'), header = T)
+annotation$gene_name <- toupper(annotation$gene_name)
+data_raw <- read.table(paste0(path,'results/03-Expression-Transcriptome-Assembly/merged_gene_counts.txt'), header = T)
+colnames(data_raw) <- gsub(pattern = '_R1_pairedAligned.sortedByCoord.out.bam', replacement = '', perl = T, x = gsub(pattern = 'Sample_TC.2515.', replacement ='', perl = T, x = colnames(data_raw)))
+data <- data_raw
+##Normalising the reads
+y <- DGEList(counts=data[,-1], group=factor(colnames(data[,-1])))
+y <- calcNormFactors(y)
+y$samples$eff.lib.size <- y$samples$lib.size * y$samples$norm.factors
+# write.table(y$samples,  paste0(path,"intermediate/featurecounts/library-size-norm.factors.txt"), col.names = T, row.names = F, sep = '\t' , quote = F)
+write.table(y$samples,  paste0(path,"results/03-Expression-Transcriptome-Assembly/library-size-norm.factors.txt"), col.names = T, row.names = F, sep = '\t' , quote = F)
+
+##Normalising expressions/counts by library size
+data.TMM <- cbind.data.frame(gene_id = data$gene_id, y$counts/y$samples$norm.factors)
+rownames(data.TMM) <- data.TMM$gene_id
+data.TMM.sample_info <- data.frame(Sample = colnames(data.TMM), order = 1:ncol(data.TMM))
+##
+
+##Loading samples groupings
+samples_info <- read.table(paste0(path, 'code/Samples_reads.txt'))
+samples_info <- as.data.frame(samples_info[,1])
+colnames(samples_info) <- c('Sample')
+samples_info$Group <- str_sub(samples_info$Sample, -1)
+samples_info$Sample <- gsub(pattern = '-', replacement = '.', perl = T, x = samples_info$Sample)
+rownames(samples_info) <- samples_info$Sample
+data.TMM.sample_info <- merge(data.TMM.sample_info, samples_info, by = 'Sample')
+##Plotting MDS
+tmp_y <- DGEList(counts=data.TMM[,-1], group=factor(data.TMM.sample_info$Group))
+png(paste0(path, 'results/03-Expression-Transcriptome-Assembly/plotMDS.png'), res=200,width=2000,height=2000)
+cex.main=0.8
+plotMDS(tmp_y, method = "bcv", col =  (as.numeric(as.factor(tmp_y$samples$group))), main = "Biological coefficient variation MDS")
+legend("topright", c('A', 'B'), col=1:4, pch=20, box.col = 'white')
+dev.off()
+rm(tmp_y)
