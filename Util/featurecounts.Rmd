@@ -6,10 +6,11 @@ colnames(samples) <- c('Sample', 'R1', 'R2')
 cntr <- 1
 
 for(s in samples$Sample){
-  tmp_featurecounts <- read.table(paste0(path, 'intermediate/featureCounts/STAR/',s,'/count-s-2'), header = T, skip = 1)
+  tmp_featurecounts <- read.table(paste0(path, 'intermediate/featureCounts/GSNAP_Merged_XenofilteR_assembly1/',s,'/count-s-2'), header = T, skip = 1)
   if(cntr == 1){
-    data_raw <- data.frame(tmp_featurecounts[,1], matrix(0,nrow=, nrow(tmp_featurecounts), ncol=nrow(samples), byrow = T))
-    colnames(data_raw) <- c('gene_id',as.character(samples$Sample_Lane))
+    data_raw <- data.frame(tmp_featurecounts[,1], matrix(0,nrow=nrow(tmp_featurecounts), ncol=nrow(samples), byrow = T))
+    colnames(data_raw) <- c('gene_id',as.character(samples$Sample))
+    data_raw[,s] <- tmp_featurecounts[,7]
   }else{
     data_raw[, as.character(s)] <- tmp_featurecounts[,7]
   }
