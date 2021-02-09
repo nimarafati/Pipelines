@@ -3,7 +3,7 @@
 path <- '~/SMS_5123_20_AM_fungi_annotation/'
 samples_info <- read.table(paste0(path, 'code/Samples_reads.txt'))
 colnames(samples_info) <- c('Sample', 'R1', 'R2')
-amples_info <- as.data.frame(samples_info[,1])
+samples_info <- as.data.frame(samples_info[,1])
 colnames(samples_info) <- c('Sample')
 cntr <- 1
 
