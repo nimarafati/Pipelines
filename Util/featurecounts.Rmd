@@ -19,5 +19,5 @@ for(s in samples_info$Sample){
   cat('\r', paste0(cntr,": ", as.character(s)))
   cntr <- cntr + 1
 }
-write.table(data_raw, paste0(path,'intermediate/featureCounts/STAR/merged_gene_counts.txt'), col.names = T, row.names = F, quote = F, sep = '\t')
+write.table(data_raw, paste0(path,'intermediate/featureCounts/GSNAP_Merged_XenofilteR_assembly1/merged_gene_counts.txt'), col.names = T, row.names = F, quote = F, sep = '\t')
 ```
