@@ -69,6 +69,9 @@ write.table(my_stats_df, paste0(path,'results/03-Expression-Transcriptome-Assemb
 # rownames(my_stats_df) <- my_stats_df$Status
 # colnames(my_stats_df) <- gsub('Sample_TB-2463-', '', colnames(my_stats_df))
 
+#Removing rows with zero value/%
+my_stats_df <- (my_stats_df[(rowSums(my_stats_df[,-1])>0),])
+
 png(paste0(path,'results/03-Expression-Transcriptome-Assembly/merged_summary.png'), width = 2000, height = 2000, res = 200)
 heatmap.2(as.matrix(my_stats_df[,-1]), dendrogram='none', Rowv=F, Colv=F, scale="none", density.info="none", trace="none", key=TRUE, keysize=1.2, cexCol=1, margins=c(5,15), main="Features summary")
 dev.off()
