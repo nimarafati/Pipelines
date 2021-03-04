@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 # Used to keep only the best alignment when the same fragment is aligned to two (e.g. parental) genomes.
+# This script was developed by Susanne Bornelöv and Nima Rafati
+#
 #use strict;
 use Getopt::Long;
 use Pod::Usage;
@@ -341,6 +343,8 @@ For instance sample "Sample_B16-T13-G":
 Sample_B16-T13-G-AA/Sample_B16-T13-G-gsnap-snpT-AA.Reordered.sort.bam 
 Sample_B16-T13-G-BB/Sample_B16-T13-G-gsnap-snpT-BB.Reordered.sort.bam
 
+This script was developed by Susane Bornelöv and Nima Rafati
+susanne.bornelov@gmail.com and nimarafati@gmail.com
 
 =head1 SYNOPSIS
 
