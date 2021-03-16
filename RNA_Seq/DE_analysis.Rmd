@@ -855,6 +855,7 @@ run_edge_R <- function(data.TMM, A, B, annotation, group, nsample){
 library(edgeR)
 library(reshape2)
 library(ggplot2)
+library(stringr)
 ##Loading the data
 path <- '~/SMS_5123_20_AM_fungi_annotation/'
 annotation <- read.table(paste0(path,'/intermediate/stringtie_GSNAP_assembly1/merged_XenofilteR_annotation_gene_id.txt'), header = T)
