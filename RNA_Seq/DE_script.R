@@ -59,7 +59,7 @@ ln -s /Users/nimra236/git/goatools/goslim_generic.obo
 }
 
 ##KEGG
-library(KEGGprofile)
+#library(KEGGprofile)
 library(clusterProfiler)
 run_KEGG <- function(DE_edgeR_results){
   DE_edgeR_results <- DE_edgeR_results[order(DE_edgeR_results$logFC, decreasing = T),]
