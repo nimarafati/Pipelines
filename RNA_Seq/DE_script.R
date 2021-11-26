@@ -828,7 +828,7 @@ run_edge_R <- function(data.TMM, A, B, annotation, group, nsample){
 
   # Plot BCV/Dispersion
   png("plotBCV.png", width=1500,height=1000,res=125)
-  plot(BCV)	
+  plotBCV(y)	
   dev.off()
 	
   et = exactTest(y) #Pairwise comparison ()
