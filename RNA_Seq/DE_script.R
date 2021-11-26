@@ -825,6 +825,12 @@ run_edge_R <- function(data.TMM, A, B, annotation, group, nsample){
   #y <- calcNormFactors(y) to normalize the data but it may not be needed for your data
   y <- estimateCommonDisp(y) #Estimate Common Negative Binomial Dispersion by Conditional Maximum Likelihood. Please read edgeR manual
   y <- estimateTagwiseDisp(y) # Estimate Empirical Bayes Tagwise Dispersion Values. Please read edgeR manual
+
+  # Plot BCV/Dispersion
+  png("plotBCV.png", width=1500,height=1000,res=125)
+  plot(BCV)	
+  dev.off()
+	
   et = exactTest(y) #Pairwise comparison ()
   tTags = topTags(et,n=NULL) #list tested genes
   FC.CPM.FDR<-cbind(row.names(tTags$table),tTags$table) #name the rows. 
