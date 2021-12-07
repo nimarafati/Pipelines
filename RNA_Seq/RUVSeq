@@ -1,0 +1,33 @@
+# RUVSeq based on Czarnewski1 et al., 2019 Conserved transcriptomic profile between mouse and human colitis allows unsupervised patient
+stratification
+
+library(RUVSeq)
+library(EDASeq)
+path <- '~/SMS_5933_21_MYCN_bulk_scRNASeq_chicken_retina/'
+samples_info <- read.table(paste0(path, 'doc/Bulk_Samples_info.txt'), header = T)
+rownames(samples_info) <- samples_info$Sample
+
+data <- read.table(paste0(path,'intermediate/featureCounts/merged_gene_counts.txt'), header = T)
+colnames(data) <- gsub(pattern = 'Sample_UF.2987.', replacement = '', perl = T, x = colnames(data))
+rownames(data) <- data$gene_id
+library_size <- read.table(paste0(path,"intermediate/featureCounts/library-size-norm.factors.txt"), header = T)
+
+set <- newSeqExpressionSet(round(as.matrix(data[,samples_info$Sample]),0),phenoData = samples_info)
+set <- betweenLaneNormalization(set, which="upper")
+Group <- factor(pData(set)$Group)
+
+# Plot gene correlation to library sizes
+a <- apply(log2(counts(set)+1),1,function(x){ cor.test(x,library_size$lib.size)$p.value })
+b <- apply(log2(counts(set)+1),1,function(x){ cor(x,library_size$lib.size) })
+
+plot(b,-log10(p.adjust(a)),col=ifelse(b > .9,"red","black"),xlab="cor. R",ylab="cor. -log10(FDR)",xlim=c(-1,1),las=1)
+abline(v=.9,lty=2,col="grey");
+housekeeping <- na.omit(names(b)[b > .9])
+
+# Estimating unwanted variation from ‘housekeeping’ genes using RUVseq
+k <- 2
+set1 <- RUVg(set, housekeeping, k=k)
+design <- model.matrix(~ Group + W_1 + W_2 , data=pData(set1))
+# Computing differentilaly expressed genes using EdgeR
+y <- DGEList(counts=counts(set1), group=Group,remove.zeros = T)
+y <- calcNormFactors(y,method = "TMM")
